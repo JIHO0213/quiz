@@ -56,32 +56,38 @@
     .result h2 {
       color: #e74c3c;
     }
+    .result { font-size: 1.2em; }
   </style>
 </head>
 <body>
 
   <h1>딥페이크 구별 퀴즈</h1>
-  <p>아래 두 이미지 중 진짜 사진을 선택하세요!</p>
+  <p>아래 이미지가 진짜인지, 딥페이크인지 맞춰보세요!</p>
 
   <div id="quiz-container" class="quiz-container">
-    <div class="quiz-images">
-      <img id="quiz-image1" class="quiz-image" src="" alt="Quiz Image 1" onclick="checkAnswer(true)">
-      <img id="quiz-image2" class="quiz-image" src="" alt="Quiz Image 2" onclick="checkAnswer(false)">
+    <img id="quiz-image" class="quiz-image" src="" alt="Quiz Image">
+    <div>
+      <button onclick="checkAnswer(true)">진짜</button>
+      <button onclick="checkAnswer(false)">딥페이크</button>
     </div>
     <p id="feedback" class="feedback"></p>
   </div>
 
   <div id="result" class="result">
     <h2>딥페이크의 문제점</h2>
-    <p>딥페이크는 가짜 정보를 퍼뜨리거나 악의적으로 사용될 수 있어 사회적 문제가 됩니다...</p>
+    <p>최근 인공지능 기술의 발전으로 딥페이크와 딥보이스가 매우 정교해지며, 본래 콘텐츠 제작에 사용되던 이 기술이 불법적으로 오용되고 있습니다. 
+      특히 디지털 성범죄 등 사회적 문제가 증가하고 있으며, 이에 대한 대중적 인식이 부족한 상황입니다. 
+      기술 발전의 긍정적 가능성에도 불구하고, 현재로서는 악용 사례가 주목받고 있어 법적 규제와 AI 기반 탐지 기술 개발이 시급합니다. 
+      또한, 대중에게 기술의 위험성을 알리고, 피해자 지원 시스템을 강화하는 교육 프로그램이 필요합니다.</p>
     <p>딥페이크 피해 상담 전화: 02-1234-5678</p>
   </div>
 
   <button id="start-quiz" onclick="startQuiz()">퀴즈 시작</button>
 
   <script>
+    // Quiz data: images, correct answers
     const quizData = [
-      {
+       {
         images: ["m.jpg", "g.jpg"], // 진짜와 딥페이크 이미지 파일 경로
         isRealLeft: true,
       },
@@ -95,7 +101,7 @@
       }
     ];
 
-    let currentQuiz = 0;
+    let currentQuiz = 0; // 현재 퀴즈 번호
     let correctAnswers = 0;
 
     function startQuiz() {
@@ -107,29 +113,28 @@
     function loadQuiz() {
       if (currentQuiz < quizData.length) {
         const quiz = quizData[currentQuiz];
-        document.getElementById("quiz-image1").src = quiz.images[0];
-        document.getElementById("quiz-image2").src = quiz.images[1];
+        document.getElementById("quiz-image").src = quiz.image;
         document.getElementById("feedback").innerText = "";
       } else {
         showResult();
       }
     }
 
-    function checkAnswer(isLeftImage) {
+    function checkAnswer(isReal) {
       const quiz = quizData[currentQuiz];
       const feedback = document.getElementById("feedback");
 
-      if (isLeftImage === quiz.isRealLeft) {
-        feedback.innerText = "정답입니다! " + quiz.explanation;
+      if (isReal === quiz.isReal) {
+        feedback.innerText = "정답입니다!";
         feedback.style.color = "green";
         correctAnswers++;
       } else {
-        feedback.innerText = "오답입니다! " + quiz.explanation;
+        feedback.innerText = "오답입니다!";
         feedback.style.color = "red";
       }
 
       currentQuiz++;
-      setTimeout(loadQuiz, 2000);
+      setTimeout(loadQuiz, 2000); // 2초 후 다음 퀴즈로 이동
     }
 
     function showResult() {
