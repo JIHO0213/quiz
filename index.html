@@ -109,6 +109,7 @@
 
     let currentQuiz = 0;
     let correctAnswers = 0;
+    let isAnswered = false;
 
     function startQuiz() {
       document.getElementById("start-quiz").style.display = "none";
@@ -123,12 +124,16 @@
         document.getElementById("quiz-image2").src = quiz.images[1];
         document.getElementById("feedback").innerText = "";
         document.getElementById("next-question").style.display = "none";
+        isAnswered = false;
       } else {
         showResult();
       }
     }
 
     function checkAnswer(isLeftImage) {
+      if (isAnswered) return; // 이미 정답 확인한 경우 중복 방지
+      isAnswered = true;
+
       const quiz = quizData[currentQuiz];
       const feedback = document.getElementById("feedback");
 
