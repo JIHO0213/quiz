@@ -162,6 +162,19 @@
     function loadQuiz() {
       const quiz = quizData[currentQuiz];
 
+       const audioElement = document.getElementById("quiz-audio");
+      const videoElement = document.getElementById("quiz-video");
+
+    if (audioElement) {
+      audioElement.pause(); // 재생 멈춤
+      audioElement.currentTime = 0; // 처음으로 되감기
+    }
+
+    if (videoElement) {
+      videoElement.pause(); // 재생 멈춤
+      videoElement.currentTime = 0; // 처음으로 되감기
+    }
+
       document.getElementById("quiz-images").style.display = "none";
       document.getElementById("audio-question").style.display = "none";
       document.getElementById("video-question").style.display = "none";
